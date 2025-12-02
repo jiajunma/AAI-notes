@@ -476,16 +476,16 @@ Let $K_4 = \{e, (1\,2)(3\,4), (1\,3)(2\,4), (1\,4)(2\,3)\}$.
 
 ---
 
-**Claim 2:** $K_4$ is normal in $A_4$.
+**Claim 2:** $K_4$ is normal in $S_4$.
 
 We verify that $K_4$ is closed under conjugation by all elements of $A_4$.
 
-**Key observation:** Elements of $V_4$ are products of two disjoint 2-cycles, and conjugating such an element by any permutation preserves this cycle type.
+**Key observation:** Elements of $K_4$ are products of two disjoint 2-cycles, and conjugating such an element by any permutation preserves this cycle type.
 
-For any $\sigma \in A_4$ and any $(a\,b)(c\,d) \in V_4$:
+For any $\sigma \in A_4$ and any $(a\,b)(c\,d) \in K_4$:
 $$\sigma(a\,b)(c\,d)\sigma^{-1} = (\sigma(a)\,\sigma(b))(\sigma(c)\,\sigma(d))$$
 
-Therefore, $\sigma(a\,b)(c\,d)\sigma^{-1}$ is also a product of two disjoint 2-cycles in $A_4$, hence is in $V_4$.
+Therefore, $\sigma(a\,b)(c\,d)\sigma^{-1}$ is also a product of two disjoint 2-cycles in $A_4$, hence is in $K_4$.
 
 ---
 
