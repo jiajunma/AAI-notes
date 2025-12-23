@@ -1,0 +1,753 @@
+\documentclass[12pt]{article}
+
+\usepackage{comment}
+\usepackage{geometry}
+\geometry{a4paper,portrait,margin=2.5cm}
+\setlength\parindent{0pt}
+
+\usepackage{amsmath,amssymb,amsthm,braket,mathtools,mathrsfs}
+\usepackage{multirow,comment,csquotes,enumitem,titlesec,changepage,dirtytalk}
+\usepackage[center]{caption}
+
+\usepackage{tikz}
+\usetikzlibrary{arrows,shadows,patterns,calc}
+\usetikzlibrary{shapes.geometric}
+\usetikzlibrary{cd}
+
+\usepackage{cellspace}
+\setlength{\cellspacetoplimit}{2pt}
+\setlength{\cellspacebottomlimit}{2pt}
+
+\usepackage{hyperref}
+\hypersetup{bookmarksnumbered,colorlinks=true,linkcolor=blue,filecolor=magenta,urlcolor=cyan}
+
+\providecommand{\abs}[1]{\ensuremath{\left|#1\right|}}
+
+\providecommand{\bN}{\mathbb{N}}
+\providecommand{\bC}{\mathbb{C}}
+\providecommand{\bZ}{\mathbb{Z}}
+\providecommand{\bQ}{\mathbb{Q}}
+\providecommand{\bR}{\mathbb{R}}
+\providecommand{\id}{\mathrm{id}}
+\long\def\delete#1{\relax}
+
+\def\tr{\mathrm{tr}}
+
+\def\GL{\mathrm{GL}}
+\long\def\solution#1{}
+%\long\def\solution#1{\begin{solution}#1\end{solution}}
+\def\Fix{\mathrm{Fix}}
+
+\theoremstyle{definition}
+\newtheorem{quest}{Question}
+
+\newtheorem*{solbody}{Solution}
+
+\newtheorem{seca}{Section}
+\renewcommand{\theseca}{\Alph{seca}}
+
+
+
+
+
+%\excludecomment{EQA}
+%\excludecomment{EQB}
+%\excludecomment{sol}
+
+\newlength{\myansheight}
+\newsavebox{\myans}
+% Create the reference text for measures
+\def\printans#1{
+#1
+}
+
+\long\def\ans#1{
+\ifcsname showanswer\endcsname
+#1\else
+\ifcsname shortversion\endcsname\relax\else\clearpage \fi
+\fi
+}
+
+
+\long\def\solans#1{
+\ifcsname showanswer\endcsname
+\begin{solbody}#1\end{solbody}\else \relax \fi
+}
+
+%\long\def\solans#1{
+%\ifcsname showanswer\endcsname
+%{\bfseries Solution: }#1 \else \relax \fi
+%\fi
+%}
+
+
+
+
+\def\showABmarkA{
+\ifcsname setA\endcsname \ifcsname setB\endcsname
+{\color{red}(QA)}
+\fi\fi
+}
+\def\showABmarkB{
+\ifcsname setA\endcsname \ifcsname setB\endcsname
+{\color{red}(QB)}
+\fi\fi
+}
+
+\long\def\QA#1{\ifcsname setA\endcsname\showABmarkA{#1}\fi
+}
+
+\long\def\QB#1{\ifcsname setB\endcsname\showABmarkB{#1}\fi
+}
+
+\def\AB{\ifcsname setA\endcsname{A}\fi
+\ifcsname setB\endcsname{B}\fi }
+
+
+\def\tickbox{
+$\text{\rlap{$\checkmark$}}\square$
+}
+\def\Atick{\ifcsname setA\endcsname \tickbox \else $\square$ \fi
+}
+\def\Btick{\ifcsname setB\endcsname \tickbox \else $\square$ \fi
+}
+% Calculate total marks
+\newcounter{TM}
+\setcounter{TM}{0}
+%
+\def\MM#1{\relax {[$#1$ marks]}\addtocounter{TM}{#1}}
+\def\QM#1{\relax {($#1$ marks)}}
+
+\def\printtotalmarks{
+\ifcsname shortversion\endcsname{
+\vfill  Total marks: $\arabic{TM}$}\fi
+}
+
+\def\makecoverpage{
+\ifcsname showanswer\endcsname\MarkingCover\else\PaperCover\fi
+}
+
+\def\makeendpage{
+\ifcsname showanswer\endcsname -- END OF MARKING SCHEME --  \else -- END OF PAPER --  \fi
+}
+
+\def\im{\mathrm{im}\,}
+\def\ker{\mathrm{ker}\,}
+\usepackage{lastpage,fancyhdr}
+
+\fancyhf{}
+\lhead{CONFIDENTIAL}
+\rhead{\acyear/\coursecode/\AB}
+%\rhead{202109/MAT211}
+\cfoot{Page \thepage \hspace{1pt} of \pageref{LastPage}}
+\renewcommand{\headrulewidth}{0pt}
+
+\def\uans#1{
+\ifcsname showanswer\endcsname{
+\uline{\hspace{2em}#1 \hspace{2em}}}\else{
+\uline{\phantom{\hspace{2em}#1 \hspace{2em}}}}
+ \fi
+}
+
+\def\tans#1{
+\ifcsname showanswer\endcsname{
+\ensuremath{[\hspace{1em}#1 \hspace{1em}]}}\else{
+\ensuremath{[\phantom{\hspace{1em}#1 \hspace{1em}}]}}
+ \fi
+}
+
+\def\Stab{\mathrm{Stab}}
+\def\bargamma{\overline{\gamma}}
+\def\barphi{\overline{\varphi}}
+
+%\def\range{\mathop{\mathrm{range}}}
+%\def\null{\mathop{\mathrm{null}}}
+%\DeclareMathOperator{\range}{range}
+%\DeclareMathOperator{\nullsp}{null}
+
+\def\Aut{\mathrm{Aut}}
+\def\bF{\mathbb{F}}
+\def\Gal{\mathrm{Gal}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Settings
+%
+%\def\setA{}
+%\includecomment{EQA}
+%\def\setB{}
+%\includecomment{EQB}
+%\def\showanswer{}
+%\special{pdf:encrypt ownerpw (MAT2112021) userpw (MAT2112021) length 128 perm 2052}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\def\coursecode{MAT211}
+\def\coursename{Abstract Algebra I}
+\def\acyear{2025/09}
+
+\def\Fr{\mathrm{Fr}}
+\def\rank{\mathrm{rank}\,}
+\def\Im{\mathrm{Im}\,}
+
+% \def\setA{}
+% \def\setB{}
+% \def\showanswer{}
+
+\begin{document}
+\renewcommand{\baselinestretch}{1.5}
+
+\def\PaperCover{
+\pagestyle{empty}
+\renewcommand{\baselinestretch}{1.5}
+\begin{center}
+\includegraphics[width=117.6pt]{xmum-icon.jpg}\\
+\fontsize{14}{16.7}
+\selectfont
+\bfseries XIAMEN UNIVERSITY MALAYSIA\\
+FINAL EXAMINATION
+\end{center}
+%\renewcommand{\baselinestretch}{2}
+\begin{tabbing}
+Question Paper Setter: \ \ \= Ma, Jia-Jun \= Question Paper:\=  \kill
+Course Code: \>  \coursecode \\[10pt]
+Course Name: \> \coursename \\[10pt]
+Question Paper Setter: \> Ma, Jia-Jun \\[10pt]
+Academic Session:\> \acyear \> Question Paper:   A \Atick \ \ \ B \Btick \\[10pt]
+Total No. of Pages:\> 	\pageref{LastPage} \> Time Allocated:	2 hours\\[10pt]
+Additional Materials:\> NA 	\\[10pt]
+Apparatus Allowed:\> NA
+\end{tabbing}
+
+\begin{center}\bfseries \underline{
+INSTRUCTIONS TO CANDIDATES}
+\end{center}
+\begin{enumerate}
+\item This paper consists of 3 questions. 
+\item Read the above information carefully to ensure you have the correct and complete question paper.
+
+\item Please follow the requirements of each section and write down all the corresponding answers on the answer book provided.
+
+\item Candidates are not allowed to leave the exam room during the first 60 minutes and the last 15 minutes of the exam.
+
+\item Candidates are required to hand in both the question paper and answer book to the invigilator before leaving the examination room (including all blank or used papers, if applicable).
+\end{enumerate}
+\vfill
+\centering{\bfseries \small DO NOT TURN OVER THIS PAGE UNTIL INSTRUCTED TO DO SO.
+}
+\\[2em]
+
+(Student ID: \underline{\hspace{4cm}}  Full Name: \underline{\hspace{6cm}} )
+\clearpage
+}
+
+
+\def\MarkingCover{
+\pagestyle{empty}
+\renewcommand{\baselinestretch}{1.5}
+\begin{center}
+\includegraphics[width=117.6pt]{xmum-icon.jpg}\\
+\fontsize{14}{16.7}
+\selectfont
+\bfseries XIAMEN UNIVERSITY MALAYSIA\\
+FINAL EXAMINATION\\
+MARKING SCHEME
+\end{center}
+%\renewcommand{\baselinestretch}{2}
+\begin{tabbing}
+Question Paper Setter: \ \ \= Ma, Jia-Jun \= Question Paper:\=  \kill
+Course Code: \>  \coursecode \\[10pt]
+Course Name: \> \coursename \\[10pt]
+Question Paper Setter: \> Ma, Jia-Jun \\[10pt]
+Academic Session:\> \acyear	\> Question Paper: A \Atick \ \ \ B \Btick
+%Total No. of Pages:\> 	3	\> Time Allocated:	2 hours\\[10pt]
+%Additional Materials:\> NA 	\\[10pt]
+%Apparatus Allowed:\> NA
+\end{tabbing}
+\vspace{-8pt}
+\hrule
+\vspace{10pt}
+{\bfseries  General Marking Guidelines}
+\begin{enumerate}
+\item All candidates must be treated equally. Examiners must mark all candidates by the same standard.
+\item 	Marking schemes should be applied positively. Candidates must be rewarded for what they have shown they can do rather than penalized for omissions.
+\item Examiners should mark according to the marking scheme and not based on their perception of where the grade boundaries lie.
+\item There is no ceiling on achievement. All marks on the marking scheme should be used appropriately.
+\item All the marks on the marking scheme are designed to be awarded.  Examiners should always award full marks if deserved, i.e., if the answer matches the marking scheme.  Examiners should also be prepared to award zero marks if the candidate’s response is not worthy of credit according to the marking scheme.
+\item Marks may be awarded for any correct responses, not just the indicative answer which appears on the marking scheme.
+\item Where some judgment is required, marking schemes will provide the principles by which marks will be awarded, and exemplification may be limited.
+\item All examiners are instructed that alternative correct answers and unexpected approaches in candidates' scripts must be given marks that fairly reflect the relevant knowledge and skills demonstrated.
+\item When examiners are in doubt regarding the application of the marking scheme to a candidate’s response, the Setter must be consulted.
+\end{enumerate}
+\clearpage
+}
+
+\makecoverpage
+
+
+
+\setcounter{page}{1}
+\pagestyle{fancy}
+%\begin{center}
+%{\Large\textbf{Xiamen University Malaysia}\\ \vspace{4pt}\Large\textbf{\coursecode\   \coursename
+%}}\\
+%    Final Exam%\AB
+%    (100 Marks )
+%\end{center}
+
+%\pagebreak
+
+\begin{quest}(30 marks)
+    Determine if the following statements are true or false. If the statement is true, give a short explanation or proof. If the statement is false, explain why by giving a counterexample.
+    \begin{enumerate}[label=(\alph*)]
+        
+        \item \MM{5} \QA{Every group of order $12$ is abelian.
+
+        \solans{False. Consider the alternating group $A_4$.
+        }
+        }
+        \QB{Every group of order $13$ is abelian.
+
+        \solans{True. Every group of prime order is cyclic, hence abelian.
+        }
+        }
+        
+        \item\MM{5} Every normal subgroup is the kernel of a group homomorphism.
+
+        \solans{ True. Let $N$ be a normal subgroup of $G$. Then, the canonical group homomorphism $f : G \to G/N$ defined by $g \mapsto gN$ has kernel $N$.
+        }
+
+        \item \MM{5} If a group $G$ has a unique subgroup $H$ of order $19$, then $H$ is normal in $G$.
+        \solans{True. We proved that for all $g \in G$, $|gHg^{-1}|=|H|$. So, if the subgroup of order $|H|$ is unique, it means $gHg^{-1}=H$.        
+        }
+
+    
+        \item\MM{5} \QA{Let $R$ and $S$ be rings with unity. If $f : R \to S$ is a surjective ring homomorphism, then $f(1_R) = 1_S$.
+        \solans{True. Since $f$ is surjective, for all $s \in S$, we can also write $s=f(r)$, for some $r \in R$. In particular, we let $e=f(1_R)$. Then,
+        $$
+        e \cdot s = f(1_R) \cdot f(r)  = f(1_R \cdot r) = f(r) = s,
+        $$
+        and similarly we get $s \cdot e = s$. Hence, $e=1_S$.
+        }
+        }
+        
+        \QB{Let $R$ and $S$ be rings with unity. If $f : R \to S$ is a ring homomorphism, then $f(1_R) = 1_S$.
+        \solans{False. Consider the ring homomorphism $f : \bZ \to \bZ \times \bZ$ defined by $a \mapsto (a,0)$, we have $f(1) = (1,0) \neq (1,1)$.
+        }
+        }
+
+        \item\MM{5} \QA{Zero ideal is always a prime ideal in an integral domain.
+        \solans{
+        True. Let $D$ be an integral domain. 
+
+        Since $D/\{0\} = D$ which is an integral domain, by theorem $\{0\}$ is a prime ideal.
+
+        \textbf{OR}
+        
+        For any $ab \in (0)$, which means $ab=0$, we have $a=0$ or $b=0$ since $D$ is a domain, thus $a \in (0)$ or $b \in (0)$.
+        }
+        }
+
+        \QB{Zero ideal is always a prime ideal in a ring.
+        \solans{False. Consider the ring $\bZ_4$. We have $2 \cdot 2 = 0 \in (0)$ but $2 \neq 0$.
+        }
+        }
+        
+
+        \item\MM{5} \QA{The field $\bR$ is the fractional field of $\bZ[\sqrt{2}]$.
+        \solans{
+        False. $\bQ[\sqrt{2}]$ is a smaller field than $\bR$ that contains $\bZ[\sqrt{2}]$.
+        }
+        }
+
+        \QB{The field $\bC$ is the fractional field of $\bZ[\sqrt{-1}]$.
+        \solans{
+        False. $\bQ[\sqrt{-1}]$ is a smaller field than $\bC$ that contains $\bZ[\sqrt{-1}]$.
+        }
+        }
+
+        % \item \MM{5} For all $n \geq 2$, $|\Aut(\bZ_n)| = n-1$.
+         %\solanss{ False. Recall that $\Aut(\bZ_n) \cong \bZ_n^{\times}$, so when $n=4$ we have 
+        %$$
+        %|\Aut(\bZ_4)| = |\bZ_4^{\times}| = |\bZ_2| = 2 \neq 4-1.
+        %$$
+        %}{25em}
+
+        % \item\MM{5} Let $G$ be a group. If $a^2=e$ for all $a \in G$, then $G$ is abelian.
+
+        % \item\MM{5} Let $H$ be a subgroup of a group $G$. Let $a,b \in G$. Then $aH = bH$ if and only if $ab^{-1} \in H$.
+
+        % \item\MM{5} In a quotient group $G/H$, if $aH = bH$, then ord$(a) = $ ord$(b)$.
+
+        % \item\MM{5} Every non-commutative ring has a zero-divisor.
+    \end{enumerate}
+\end{quest}
+
+%\pagebreak
+
+\begin{quest}(40 marks) 
+    Solve the following questions. 
+    \begin{enumerate}[label=(\alph*)]
+    \item Give an example of the following. You do not need to justify your answer.
+    \begin{enumerate}[label=(\roman*)]
+        \item\MM{4}  A subgroup of $(\bR^2,+)$ but not a vector subspace of $\bR^2$ (as a vector space over $\bR$).
+        \item\MM{4}  An element in $\text{Orb}_{\sigma}(5)$ when $\sigma=(1432)(67) \in S_7$ acts on $\{1,2,\ldots,7\}$.
+        \item\MM{4} \QA{A zero-divisor in the ring $\bZ_3 \times 3 \bZ$.}
+        
+        \QB{A zero-divisor in the ring
+        $$
+        \left\{ \begin{pmatrix}
+            0 & 0 \\ x & y
+        \end{pmatrix} \ \Bigg| \ x,y \in \bR \right\}.
+        $$
+        }
+        \item\MM{4} \QA{A unit in $\bZ_{12}$ other than $[1]_{12}$.}
+
+        \QB{A unit in $\bZ_6$ other than $[1]_6$.}
+    \end{enumerate}
+    \solans{\hfill
+    \begin{enumerate}[label=(\roman*)]
+        \item Any acceptable answer, e.g. $\bZ^2$.
+        \item $5$.
+        \item \QA{Any acceptable answer, e.g., $([0]_3, 3), ([1]_3, 0), \ldots$}
+
+        \QB{Any acceptable answer, e.g., 
+        $$
+        \begin{pmatrix}
+            0 & 0 \\ 1 & 0
+        \end{pmatrix}, \quad
+        \begin{pmatrix}
+            0 & 0 \\ 0 & 1
+        \end{pmatrix}, \quad \ldots
+        $$}
+        \item \QA{$[5]_{12},[7]_{12}$ or $ [11]_{12}$}.
+
+        \QB{$[5]_6$.}
+
+    \end{enumerate}
+    }
+%\pagebreak
+
+    \item \MM{6} \QA{Determine whether $(\bQ,+)$ is cyclic. Justify your answer.
+    \solans{
+    %We know from lecture that every cyclic group is isomorphic to either $\bZ$ or $\bZ_n$, for some $n \in \bZ^+$. Since $|\bQ|$ is infinite, $\bQ$ is not isomorphic to $\bZ_n$. We also showed in lecture that $\bQ$ is not isomorphic to $\bZ$. Hence, $\bQ$ is not cyclic.
+    
+    %\textbf{OR}
+    
+    Suppose $\bQ$ is cyclic, i.e., there exists $\frac{a}{b} \in \bQ$ such that every $\frac{m}{n} \in \bQ$ can be written as $k \cdot \frac{a}{b}$, for some $k \in \bZ$. Then, since $\frac{a}{2b} \in \bQ$, we can write
+    $$
+    \frac{a}{2b} = k \cdot \frac{a}{b}
+    $$
+    which gives us $k = 1/2$, a contradiction. Hence, $\bQ$ is not cyclic.
+    }
+    }
+
+    \QB{Fix $n>1$ a positive integer. Determine whether $\bZ \times \bZ_n$ is cyclic. Justify your answer.
+    \solans{
+    We know from lecture that every cyclic group is isomorphic to either $\bZ$ or $\bZ_n$, for some $n \in \bZ^+$. Since $|\bZ \times \bZ_n|$ is infinite, $\bZ \times \bZ_n$ is not isomorphic to $\bZ_n$. Then, note that the element $(0, 1)$ has order $n$ in $\bZ \times \bZ_n$ but there is no trivial element in $\bZ$ with finite order, so $\bZ \times \bZ_n \not\simeq \bZ$. Hence, $\bZ \times \bZ_n$ is not cyclic.
+    }
+    }
+
+    \item \MM{6}  Let $H$ be a normal subgroup of a group $G$. Under the group action of $G$ on $G/H$ defined by $g \cdot(xH) = (gx)H$, compute  Stab$_G(xH)$ for a fixed $x \in G$.
+    \solans{
+    \begin{align*}
+        \text{Stab}_G(xH) &= \{g \in G \mid gxH= xH\} \\
+        &= \{ g \in G \mid x^{-1}gx \in H \} \\
+        &= \{g \in G \mid g \in xHx^{-1}  \} \\
+        &= \{g \in G \mid g \in H\} & \text{(since } H \text{ is normal)} \\
+        &= H
+    \end{align*}
+    }
+
+    \item \MM{6} \QA{Compute the characteristic of the ring $\bZ_6 \times 6 \bZ$.
+    \solans{ Since $\bZ \simeq 6\bZ$ is embedded in $\bZ_6 \times 6\bZ$, the characteristic of $\bZ_6 \times 6 \bZ$ is $0$.
+    }
+    }
+
+    \QB{Compute the characteristic of the ring $\bZ_6[x]$.     \solans{ Since char$(\bZ_6) = 6$, the smallest integer $n$ such that $n \cdot 1 = 0$ in $\bZ_6$ is $6$. The additive identity and multiplicative identity in $\bZ_6[x]$ is the same as those in $\bZ_6$. Hence, char$(\bZ_6[x]) = \text{char}(\bZ_6) = 6$. 
+    }
+    }
+    
+    \item \MM{6} \QA{Let $R$ be a commutative ring and $A \subseteq R$. Show that the \textit{annihilator} of $A$, i.e.,
+    $$
+    \text{Ann}(A) \coloneqq \{ r \in R \mid ar = 0 \text{ for all } a \in A\}
+    $$
+    is an ideal of $R$.
+    \solans{ First, Ann$(A)$ is nonempty since $a \cdot 0 = 0$ for all $a \in A$ implies $0 \in \text{Ann}(A)$. For all $x,y \in \text{Ann}(A)$, for all $a \in A$ we have
+    $$
+    a(x-y)=ax-ay=0 \implies x-y \in \text{Ann}(A)
+    $$
+    and for all $s \in R$,
+    $$
+    a(sx) = s(ax) = s \cdot 0 = 0 \implies sx \in \text{Ann}(A).
+    $$
+    }
+    }
+
+    \QB{Let $R$ be a commutative ring and $I$ an ideal of $R$. Show that the \textit{radical} of $I$, i.e., 
+    $$
+    \text{rad}(I) \coloneqq \{ r \in R \mid r^n \in I \text{ for some } n \in \bZ^+\}
+    $$
+    is an ideal of $R$.
+
+    \solans{ First, rad$(I)$ is nonempty since $0^1=0 \in I$ implies $0 \in \text{rad}(I)$. For all $x,y \in \text{rad}(I)$, we have $x^m \in I$, $y^n \in I$, for some $m,n \in \bZ^+$. Then,
+    $$
+    (x-y)^{m+n} = \sum_{k=0}^{m+n}x^k(-y)^{m+n-k} \in I \implies x-y \in \text{rad}(I)
+    $$
+    since in the summation either $k \geq m$ or $m+n-k \geq n$.
+    For all $r \in R$,
+    $$
+    (rx)^m = r^mx^m \in I \implies rx \in \text{rad}(I).
+    $$
+    }
+    }
+%    \pagebreak
+    
+%     \item\MM{6} Show that the fields $\bQ(\sqrt{2})$ and $\bQ(\sqrt{-2})$ are not isomorphic as rings.
+
+%         \iffalse
+%         \solans{ If they were isomorphic, say $\phi : \bQ(\sqrt{-2}) \to \bQ(\sqrt{2})$ is a field isomorphism.
+%         Note that $\phi(1) = 1$, we conclude $\phi|_\bZ = \id_\bZ$ and $\phi|_\bQ = \id_\bQ$.  
+        
+%         Moreover, we have $b^2 \geq 0$ for each element $b \in \bQ(\sqrt{2})$ since $\bQ(\sqrt{2}) \subseteq \bR$.  
+            
+%         Consider the element $a = \phi(\sqrt{-2}) \in \bQ(\sqrt{2})$.
+%         Then
+%         $$
+%         a^2 = \phi (\sqrt{-2} )^2 = \phi(-2) = -2 < 0,
+%         $$
+%         which is a contradiction.
+%         }
+%         \fi
+
+%         \item \MM{6} Recall from class that the \textit{orthogonal group of rank $n$ over $\mathbb{R}$} is defined by
+%     $$\mathrm{O}_n(\mathbb{R}):=\left\{A\in\GL_n(\mathbb{R}) \mid A^TA=I\right\},$$
+%     equipped with usual matrix multiplication. The group $\mathrm{O}_n(\mathbb{R})$ has a subgroup
+%     $$\mathrm{SO}_n(\mathbb{R}):=\left\{A\in\mathrm{O}_n(\mathbb{R}) \mid \det A=1\right\},$$
+%     called the \textit{special orthogonal group of rank $n$ over $\mathbb{R}$}.
+%     Prove that $$\left[\mathrm{O}_n(\mathbb{R}) : \mathrm{SO}_n(\mathbb{R})\right]=2.$$
+%     \textbf{Hint}: Recall that $\det$ is a group homomorphism. What equation must the determinant of an orthogonal matrix satisfy?
+
+% \item\MM{6} If $f : \bQ \to G$ is an isomorphism between additive groups, show that for all $q \in \bQ$, 
+%     $$
+%     f(q)= q \cdot f(1),
+%     $$
+%     where $q \cdot f(1)$ means $\underbrace{f(1) + \cdots + f(1)}_{q \text{ times}}$.
+%     \iffalse
+%     \solans{
+%     Suppose $q = \frac{a}{b}$, for some $a \in \bZ$, $b \in \bZ \setminus \{0\}$. Since $f$ is a homomorphism, we have 
+%     $$
+%     f(q) = f \left( \frac{a}{b} \right) = f \left( a \cdot \frac{1}{b} \right) = a \cdot f \left( \frac{1}{b} \right).
+%     $$
+%     It remains to show that $f\left( \frac{1}{b} \right) = \frac{1}{b} \cdot f(1)$. However, this is clearly true since
+%     $$
+%     b \cdot f\left( \frac{1}{b} \right) = f \left( b \cdot \frac{1}{b} \right) = f(1).
+%     $$
+%     }
+%     \fi
+ \end{enumerate}
+ \end{quest}
+
+
+\begin{quest}(30 marks) Solve the following questions.
+\begin{enumerate}[label=(\alph*)]
+   \item \MM{10}
+  Let $G_1$ and $G_2$ be groups. Let $H_1 \trianglelefteq G_1$ and $H_2 \trianglelefteq G_2$. Prove that
+   $$
+   (G_1/H_1) \times (G_2/H_2) \simeq (G_1 \times G_2) / (H_1 \times H_2).
+   $$
+   %\textbf{Remark}: You shall not assume without proof that $H_1 \times H_2 \trianglelefteq G_1 \times G_2$.
+
+\solans{ Consider the map 
+\begin{align*}
+    f:G_1 \times G_2 &\to G_1/H_1 \times G_2/H_2 \\
+    (g_1,g_2) &\mapsto (g_1H_1, g_2H_2).
+\end{align*}
+This map is a group homomorphism since
+\begin{align*}
+    f((g_1,g_2)\cdot (g_1',g_2')) &= f((g_1g_1', g_2g_2')) \\
+    &= (g_1g_1'H_1, g_2g_2'H_2) \\
+    &= (g_1H_1,g_2H_2) \cdot (g_1'H_1, g_2'H_2) \\
+    &= f(g_1,g_2) \cdot f(g_1',g_2').
+\end{align*}
+Next, we compute
+\begin{align*}
+    \ker(f) &= \{ (g_1,g_2) \in G_1 \times G_2 \mid (g_1H_1,g_2H_2) = (H_1,H_2) \} \\
+    &= \{ (g_1,g_2) \in G_1 \times G_2 \mid g_i \in H_i, \text{ for both } i =1,2 \} \\
+    &= H_1 \times H_2.
+\end{align*}
+Since the kernel of a group homomorphism is always normal in the domain group, we are done.
+}
+    
+    
+%     \item\MM{10} Let $N$ be a normal subgroup of a group $G$. Show that if $N$ and $G/N$ are both solvable, then $G$ must be solvable.
+%     \solanss{ (this is an old solution, will amend the notation) 
+%     Consider the following solvable series 
+% $$
+% N= N_0 \supset N_1 \supset \cdots \supset N_m = \{e\}
+% $$
+% and
+% $$
+% G/N = G_0/N \supset G_1/N \supset \cdots \supset G_n/N = N/N
+% $$
+% in $N$ and $G/N$, respectively. We claim that the series
+% $$
+% G = G_0 \supset G_1 \supset \cdots \supset G_n = N_0 \supset N_1 \supset \cdots \supset N_m = \{e\}
+% $$
+% is a solvable series in $G$. Each $G_{i+1}$ is normal in $G_i$ because each $G_{i+1}/N$ is normal in $G_i/N$. By third isomorphism theorem, each $G_i / G_{i+1}$ is isomorphic to $(G_i/N) / (G_{i+1}/N)$, thus each $G_i / G_{i+1}$ is abelian and this completes the proof.
+%     }{20em}
+   % \pagebreak
+
+    \item Let $\phi : \bZ_6 \to \bZ_4$ be a group homomorphism.
+\begin{enumerate}[label=(\roman*)]
+    \item\MM{5} Show that the order of $\phi([1]_6)$ in $\bZ_4$ divides $6$. Then, explain why $\phi([1]_6)$ can only have order $1$ or order $2$ in $\bZ_4$.
+    \item\MM{5} Hence, or otherwise, find all group homomorphisms from $\bZ_6$ to $\bZ_4$.
+    \item[] Hint: The group homomorphism $\phi$ is determined by the image of $[1]_6$. 
+\end{enumerate}
+\solans{
+\hfill
+\begin{enumerate}[label=(\roman*)]
+    \item In $\bZ_6$, we have $[6]_6 = [0]_6$. So, 
+    $$
+    [0]_4 = \phi([0]_6) = \phi([6]_6) = \phi(6[1]_6) = 6 \phi([1]_6).
+    $$
+    Hence, the ord$(\phi([1]_6)) \mid 6$.
+    \hfill
+    
+    This implies ord$(\phi([1]_6))$ can possibly be $1,2,3$ or $6$. Since there are only 4 elements in $\bZ_4$, ord$(\phi([1]_6)) \neq 6$. Also, note that there are no elements in $\bZ_4$ with order $3$, thus ord$(\phi([1]_6)) \neq 3$. Hence, ord$(\phi([1]_6)) = 1$ or $2$.
+    \item Since $\phi([k]_6) = k \cdot \phi([1]_6)$, a group homomorphism $\phi : \bZ_6 \to \bZ_4$ is uniquely determined by the value of $\phi([1]_6)$.
+    \hfill
+    
+    \textbf{Case 1}: ord$(\phi([1]_6)) = 1$. This implies $\phi([1]_6)$ is the identity element, i.e., $\phi([1]_6) = [0]_4$. Then,
+    $$
+    \phi([k]_6) = k \cdot [0]_4 = [0]_4
+    $$
+    for all $k=1,\ldots, 6$. This is the trivial homomorphism.
+    \hfill
+    
+    \textbf{Case 2}: ord$(\phi([1]_6)) = 2$. This implies $\phi([1]_6) = [2]_4$ and 
+    $$
+    \phi([k]_6) = \begin{cases}
+        [0]_4 & \text{if } k = 0,2,4; \\
+        [2]_4 & \text{if } k=1,3,5.
+    \end{cases}
+    $$
+    \end{enumerate}
+    }
+%\pagebreak
+
+\item\MM{10} \QA{ Let $F$ be a finite field and $p \coloneqq \text{char}(F)$. Show that the map $\varphi : F \to F$ defined by $\varphi(x) = x^p$ is always a ring automorphism on $F$.
+\solans{
+We first show that $\varphi:F \to F$ is a ring homomorphism. Indeed, for all $a,b \in F$, we have
+$$
+\varphi(a+b) = (a+b)^p = a^p+b^p = \varphi(a)+\varphi(b)
+$$
+and
+$$
+\varphi(ab)=(ab)^p =a^pb^p=\varphi(a) \varphi(b),
+$$
+where $(a+b)^p=a^p+b^p$ since every finite field has prime characteristic $p$. We now show $\varphi$ is injective. For all $x \in F$, we have
+$$
+\ker(\varphi) = \{x \in F \mid x^p=0\} = \{0\}
+$$
+since $x^p=0$ implies $x=0$ (because a field is an integral domain). Surjectivity then follows since $F$ is a finite set.
+}
+}
+
+\iffalse
+\item \MM{10} \QA{Suppose $\GL_2(\bC)$ acts naturally on $\bC^2$ by matrix multiplication, i.e.
+   $$\begin{pmatrix}
+       a & b \\ c & d
+   \end{pmatrix}\cdot\begin{pmatrix}
+       z_1 \\ z_2
+   \end{pmatrix}=\begin{pmatrix}
+       a & b \\ c & d
+   \end{pmatrix}\begin{pmatrix}
+       z_1 \\ z_2
+   \end{pmatrix}=\begin{pmatrix}
+       az_1+bz_2 \\ cz_1+dz_2
+   \end{pmatrix}.$$ Show that the orbit space is given by
+    $$
+    \bC^2 / \GL_2(\bC) = \{\{\mathbf{0}\}, \bC^2 \setminus \{\mathbf{0} \} \}.
+    $$
+   (In this question, you are not allowed to assume without proof that $\GL_2(\bC)$ acts on $\bC^2 \setminus \{\mathbf{0}\}$ transitively.)
+   \solans{The orbit of $\mathbf{0}$ is $\{\mathbf{0}\}$ since for all $A \in \GL_2(\bC)$, $A \cdot \mathbf{0} = \mathbf{0}$. Next, we claim that the orbit of $\begin{pmatrix}
+       1 \\ 0
+   \end{pmatrix}$ is $\bC^2 \setminus \{\mathbf{0\}}$. Indeed, for all $\begin{pmatrix}
+       x \\ y
+   \end{pmatrix} \in \bC^2 \setminus \{\mathbf{0} \}$, we have 
+   $$
+   \begin{pmatrix}
+       x & 0 \\
+       y & 1
+   \end{pmatrix} \begin{pmatrix}
+       1 \\ 0
+   \end{pmatrix} = \begin{pmatrix}
+       x \\ y
+   \end{pmatrix} = \begin{pmatrix}
+       x & 1 \\
+       y & 0
+   \end{pmatrix} \begin{pmatrix}
+       1 \\ 0
+   \end{pmatrix}.
+   $$
+   At least one of $\begin{pmatrix}
+       x & 0 \\
+       y & 1
+   \end{pmatrix}$ and $\begin{pmatrix}
+       x & 1 \\
+       y & 0
+   \end{pmatrix}$ must be in $\GL_2(\bC)$ since $x$ and $y$ are not both zero.
+   }
+   }
+   \QB{For any positive integer $n$, suppose $\GL_n(\bC)$ acts naturally on $\bC^n$ by matrix multiplication. Show that the orbit space is given by
+    $$
+    \bC^n / \GL_n(\bC) = \{\{\mathbf{0}\}, \bC^n \setminus \{\mathbf{0} \} \}.
+    $$
+   (In this question, you are not allowed to assume without proof that $\GL_n(\bC)$ acts on $\bC^n \setminus \{\mathbf{0}\}$ transitively.)
+   \solans{The orbit of $\mathbf{0}$ is $\{\mathbf{0}\}$ since for all $A \in \GL_n(\bC)$, $A \cdot \mathbf{0} = \mathbf{0}$. Next, we claim that for all $\mathbf{u,v} \in \bC^n \setminus \{\mathbf{0}\}$, there exists an $A \in \GL_n(\bC)$ such that $A \mathbf{u} = \mathbf{v}$. We first form two bases $\{\mathbf{u},\mathbf{u}_1, \ldots, \mathbf{u}_{n-1} \}$ and $\{\mathbf{v},\mathbf{v}_1, \ldots, \mathbf{v}_{n-1}\}$ for $\bC^n$, then define a change-of-basis matrix $A : \bC^n \to \bC^n$ by $A\mathbf{u} = \mathbf{v}$ and $A \mathbf{u}_i = \mathbf{v}_i$, for all $i = 1,\ldots, n-1$. Since a change-of-basis matrix is invertible, we have $A \in \GL_n(\bC)$.
+   }
+}
+\fi
+
+\QB{ Let $X$ be a set and $G$ a subgroup of the permutation group $S_X$. Show that if $G$ acts on $X$ transitively, then
+    $$
+    \bigcap_{\sigma \in G} \sigma \text{Stab}_G(x) \sigma^{-1} = \{\text{id}\},
+    $$
+    for all $x \in X$. (Here, id denotes the identity element in $G$.)
+    
+    \solans{We first note that
+    \begin{align*}
+        \tau \in \sigma \text{Stab}_G(x) \sigma^{-1}
+        &\iff \sigma^{-1} \tau \sigma \in \text{Stab}_G(x) \\
+        &\iff (\sigma^{-1} \tau \sigma)(x) = x \\
+        &\iff  \tau(\sigma(x)) =\sigma(x) \\
+        &\iff \tau \in  \text{Stab}_G(\sigma (x)),
+    \end{align*}
+which implies $\sigma \text{Stab}_G(x) \sigma^{-1} = \text{Stab}_G(\sigma(x))$. In particular, 
+    \begin{align*}
+        \bigcap_{\sigma \in G} \sigma \text{Stab}_G(x) \sigma^{-1} &= \bigcap_{\sigma \in G} \text{Stab}_G(\sigma(x)) \\
+        &= \{\tau \in G \mid \tau (\sigma(x)) = \sigma(x) \text{ for all $\sigma \in G$} \} \\
+        &= \{\tau \in G \mid \tau (y) = y \text{ for all $y \in X$} \} \quad (\text{since } X \text{ is transitive}) \\
+        &= \{\text{id}\}.
+    \end{align*}
+    }
+}
+\end{enumerate}
+\end{quest}
+
+
+
+
+
+\vfill
+\begin{center}
+\textbf{END OF QUESTION PAPER}
+\end{center}
+\clearpage
+%\begin{center}
+%  \printtotalmarks\\
+%  \textbf{END}
+%\end{center}
+
+\end{document}
